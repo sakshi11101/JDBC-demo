@@ -23,6 +23,7 @@ public class Main {
             final String userName = "postgres";
             final String password = "0000";
             final String sql = "select name from student where sid = 104";
+            final String sqlPrintAllData = "select * from student";
 
             //Class.forName("org.postgresql.Driver"); //this is load and register - this is optional now as mentioned it's automatically done after java 6.
             Connection con = DriverManager.getConnection(url, userName, password);
@@ -30,6 +31,9 @@ public class Main {
 
             //create statement
             Statement st = con.createStatement();
+
+            /*
+            This part explains how to create, execute statement and process the results.
 
             //execute statement
             ResultSet resultSet = st.executeQuery(sql);
@@ -39,8 +43,20 @@ public class Main {
             String printSt = isDataExist ? "Data exist" : "Data not exist";
             System.out.println(printSt);
 
+            //Printing one student name based on given sid in sql query.
             String name = resultSet.getString("name");
             System.out.println("Name of student with Id 104 is : " + name);
+
+            */
+
+            //Print All Data as mentioned in sql query;
+            ResultSet rs = st.executeQuery(sqlPrintAllData);
+            while(rs.next()) {    //a loop to get to all data.
+                System.out.print(rs.getInt(1) + " - ");   //1, 2, 3 represnts column index and should be in same order as in table.
+                System.out.print(rs.getString(2) + " - ");
+                System.out.println(rs.getInt(3));
+            }
+
 
             //close the connection
             con.close();
