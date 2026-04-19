@@ -23,7 +23,11 @@ public class Main {
             final String userName = "postgres";
             final String password = "0000";
             final String sql = "select name from student where sid = 104";
-            final String sqlPrintAllData = "select * from student";
+            final String readSQL = "select * from student";
+            final String writeSQL = "insert into student values(110, 'Vanshika', 45)";
+            final String updateSQL = "update student set name = 'Radhika' where sid=110";
+            final String deleteSQL = "delete from student where sid=110";
+
 
             //Class.forName("org.postgresql.Driver"); //this is load and register - this is optional now as mentioned it's automatically done after java 6.
             Connection con = DriverManager.getConnection(url, userName, password);
@@ -49,14 +53,30 @@ public class Main {
 
             */
 
-            //Print All Data as mentioned in sql query;
-            ResultSet rs = st.executeQuery(sqlPrintAllData);
+            /* CRUD Operations */
+
+            /*
+            //1. Read - Print All Data as mentioned in sql query
+            ResultSet rs = st.executeQuery(readSQL);
             while(rs.next()) {    //a loop to get to all data.
                 System.out.print(rs.getInt(1) + " - ");   //1, 2, 3 represnts column index and should be in same order as in table.
                 System.out.print(rs.getString(2) + " - ");
                 System.out.println(rs.getInt(3));
             }
+            */
 
+            /*
+            //2. Write - Insert the values in database.
+            st.execute(writeSQL);
+             */
+
+            /*
+            //3. Update - update student name with sid = 110
+            st.execute(updateSQL);
+             */
+
+            //4. Delete - delete the record corresponding to sid=110
+            st.execute(deleteSQL);
 
             //close the connection
             con.close();
