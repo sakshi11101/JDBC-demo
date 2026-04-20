@@ -33,8 +33,8 @@ public class Main {
             Connection con = DriverManager.getConnection(url, userName, password);
             System.out.println("Connected to the PostgreSQL server successfully");
 
-            //create statement
-            Statement st = con.createStatement();
+            /*//create statement
+            Statement st = con.createStatement();*/
 
             /*
             This part explains how to create, execute statement and process the results.
@@ -75,8 +75,32 @@ public class Main {
             st.execute(updateSQL);
              */
 
-            //4. Delete - delete the record corresponding to sid=110
-            st.execute(deleteSQL);
+            /*//4. Delete - delete the record corresponding to sid=110
+            st.execute(deleteSQL);*/
+
+            /* PreparedStatement for dyanmic data like roll no, name and marks of student entered by user
+             and we have variables to fill data and also good for cache purpose and executing same query
+             multiple times.
+
+             Should use prepared statement for select query or when 'where' clause is in use.
+             Where table altering is happening like delete, update, we can use just statement then.
+             */
+
+            //assume these are data entered by user from GUI or web app.
+            int sid = 112;
+            String name = "Rakesh";
+            int marks = 45;
+
+            //sql query with dynamic values to add (therefore added question marks) to fill in later.
+            String psql = "insert into student values(?,?,?)";
+            PreparedStatement pst = con.prepareStatement(psql);
+            System.out.println("Prepared Statement created");
+            //now we have to fill in values, add column number and it's value.
+            pst.setInt(1, sid);
+            pst.setString(2, name);
+            pst.setInt(3, marks);
+            pst.execute();    //we need to execute the statement as well - create, execute and process
+
 
             //close the connection
             con.close();
